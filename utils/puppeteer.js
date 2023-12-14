@@ -72,6 +72,5 @@ async function extract(){
     return flattedArr
 }
 
-module.exports = {
-    extract
-}
+
+module.exports = {extract}
