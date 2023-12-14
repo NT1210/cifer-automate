@@ -17,6 +17,7 @@ async function main(){
 
     await page.exposeFunction("sliceByNumber", (array, number) => {
         const length = Math.ceil(array.length / number)
+        
         return new Array(length).fill().map((_, i) =>
           array.slice(i * number, (i + 1) * number)
         )
@@ -24,10 +25,14 @@ async function main(){
     
     await page.goto("https://ciferquery.singlewindow.cn/")
 
-    await page.type('#registerTypeName', "18");
+    await page.type('#registerTypeName', "18")
+
     await delay(1500)
-    await page.type('#countryName', "俄罗斯-Russia");
+
+    await page.type('#countryName', "俄罗斯-Russia")
+
     await delay(1500)
+
     await page.click('span[id="chaxun"]')
 
 
