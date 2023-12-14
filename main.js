@@ -15,9 +15,10 @@ async function main(){
     
     const page = await browser.newPage()
 
+    // By making use of page.exporseFunction, you can use this function inside page.evaluate()
     await page.exposeFunction("sliceByNumber", (array, number) => {
         const length = Math.ceil(array.length / number)
-        
+
         return new Array(length).fill().map((_, i) =>
           array.slice(i * number, (i + 1) * number)
         )
@@ -38,6 +39,7 @@ async function main(){
 
     const lastPageNum = await page.evaluate(() => {
         let links = document.querySelectorAll(".page-item")
+        // Be careful so as not to do .slice(-1). The last element is ">"
         return Array.from(links).slice(-2)[0].textContent
     })
 
@@ -62,11 +64,12 @@ async function main(){
         await page.click(".page-next a")
     }
 
+    // The arr structure of extractedArr is [[[ele1], [ele2]...], [[ele1], [ele2]...]...]
+    // By flatteing, you can create arr such as [[ele1], [ele2], [ele3]...]
     flattedArr = extractedArr.flat()
     console.log(flattedArr)
 
     browser.close()
-
 
     return flattedArr
 }
