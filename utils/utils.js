@@ -38,8 +38,8 @@ async function validateDocument(obj){
         let objFromMongoDB = await Cifer.findOne({chinaRegNo: chinaRegNo})
     
         if(objFromMongoDB){
-            objFromMongoDB.toObject()
-            delete objFromMongoDB._id
+            objFromMongoDB.toObject() //coverting from mongodb object to js object
+            delete objFromMongoDB._id //important
             const keys = Object.keys(unitObj)
             let toBeUpdated = false
 

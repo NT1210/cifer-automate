@@ -22,7 +22,7 @@ async function main(){
       
         const toBeAdded_toBeUpdatedArrs = await validateDocument(docsBefore) // returns array including objToBeAdded, objToBeUpdated
         const objToBeAdded = toBeAdded_toBeUpdatedArrs[0]
-        const objToBeUpdated = toBeAdded_toBeUpdatedArrs[1]
+        const objToBeUpdated = toBeAdded_toBeUpdatedArrs[1] // later youve got to create a logic in which you can detect which one is updated
 
         if(objToBeAdded.length > 0) {
             const docToBeAdded = await Cifer.create(objToBeAdded)
@@ -38,10 +38,6 @@ async function main(){
             console.log(red(`No ducuments have been updated.`))
         }
         
-        
-        // if(docs) console.log("[*]New documents created")
-
-
         // //output data to excel file
         // writeToFile(extractedData)
 
