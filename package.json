@@ -15,6 +15,7 @@
     "xlsx-populate": "^1.21.0"
   },
   "devDependencies": {
+    "console-log-colors": "^0.4.0",
     "dotenv": "^16.3.1",
     "jest": "^29.7.0",
     "jsdoc": "^4.0.2"

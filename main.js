@@ -1,23 +1,25 @@
 
-const {extract} = require("./libs/puppeteer")
-const {writeToFile} = require("./libs/xlsx-populate")
-const {connect, disconnect} = require("./db/db")
+const { extract } = require("./libs/puppeteer")
+const { writeToFile } = require("./libs/xlsx-populate")
+const { connect, disconnect } = require("./db/db")
 const mongoose = require("mongoose")
-const {Cifer} = require("./db/models/cifer")
-const {coordinateObj} = require("./utils/utils")
+const { Cifer } = require("./db/models/cifer")
+const { coordinateObj } = require("./utils/utils")
+
 
 async function main(){
     try{
         // get connected to MongoDB
         await connect()
 
+
         //extract data from cifer singlewindow
-        const extractedData = await extract()
+        // const extractedData = await extract()
 
         // create mongoDB documents
-        const docsBefore = await coordinateObj(extractedData)
-        const docs = await Cifer.create(docsBefore)
-        if(docs) console.log("[*]New documents created")
+        // const docsBefore = await coordinateObj(extractedData)
+        // const docs = await Cifer.create(docsBefore)
+        // if(docs) console.log("[*]New documents created")
 
 
         // //output data to excel file

@@ -1,12 +1,8 @@
-
-
 function coordinateObj(arr){
-
     let ArrToBeReturned = []
 
     try{
         for(let unitArr of arr){
-            
             let tempObj = {}
 
             tempObj["orderNum"] = parseInt(unitArr[0])
@@ -31,6 +27,9 @@ function coordinateObj(arr){
 }
 
 
+function compareObjects(obj, objFromMongoDB){
+    
+}
 
 
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { green, cyan } = require('console-log-colors')
 require("dotenv").config()
 
 
@@ -7,7 +8,7 @@ async function connect(){
     mongoose
     .connect(url)
     .then((res) => {
-      console.log('[*]Connected to MongoDB');
+      console.log(green('[*]Connected to MongoDB'));
     })
     .catch((err) => {
       console.log(err)
@@ -16,7 +17,7 @@ async function connect(){
 
 async function disconnect(){
     mongoose.disconnect()
-    .then(()=> console.log("[*]Disconnected from MongoDB"))
+    .then(()=> console.log(cyan("[!]Disconnected from MongoDB")))
     .catch((err) => console.error(err))
 }
 
