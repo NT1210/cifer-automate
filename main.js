@@ -13,9 +13,11 @@ async function main(){
         // get connected to MongoDB
         await connect()
 
+        let startTime = Date.now()
 
         //extract data from cifer singlewindow
         const extractedData = await extract()
+        console.log(green("[*] Data extraction completed."))
 
         // create mongoDB documents
         const docsBefore = await coordinateObj(extractedData)
@@ -37,15 +39,14 @@ async function main(){
         }else{
             console.log(red(`No ducuments have been updated.`))
         }
-        
-        // //output data to excel file
-        // writeToFile(extractedData)
-
-        // below output extractedData to template excel file. and hopefully get it connected to DB.
-
+    
+        // output extractedData to template excel file.
+        writeToFile(extractedData)
 
         // get disconnected from MongoDB
         await disconnect()
+
+        console.log(green(`[*] All the process have been completed. It took ${(Date.now()-startTime)/1000} sec.`))
 
         // return extractedData
 

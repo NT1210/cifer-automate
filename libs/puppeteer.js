@@ -36,6 +36,8 @@ async function extract(){
 
     await page.click('span[id="chaxun"]')
 
+    await delay(1000)
+
 
     const lastPageNum = await page.evaluate(() => {
         let links = document.querySelectorAll(".page-item")

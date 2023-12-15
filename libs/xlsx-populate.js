@@ -10,11 +10,11 @@ async function writeToFile(extractedData) {
 
             for(let i=0; i<extractedData.length; i++){
                 for(let j=0; j<10; j++){
-                    sheet1.row(i+1).cell(j+1).value(extractedData[i][j])
+                    sheet1.row(i+3).cell(j+2).value(extractedData[i][j])
                 }
             }
 
-            return workbook.toFileAsync("./out.xlsx")
+            return workbook.toFileAsync("./output.xlsx")
         })
         
 }
