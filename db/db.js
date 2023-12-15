@@ -17,7 +17,7 @@ async function connect(){
 
 async function disconnect(){
     mongoose.disconnect()
-    .then(()=> console.log(cyan("[!]Disconnected from MongoDB")))
+    .then(()=> console.log(cyan("[*]Disconnected from MongoDB")))
     .catch((err) => console.error(err))
 }
 

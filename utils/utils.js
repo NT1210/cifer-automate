@@ -1,3 +1,5 @@
+const { Cifer } = require("../db/models/cifer")
+
 function coordinateObj(arr){
     let ArrToBeReturned = []
 
@@ -27,12 +29,45 @@ function coordinateObj(arr){
 }
 
 
-function compareObjects(obj, objFromMongoDB){
+async function validateDocument(obj){
+    let objToBeAdded = [] //array
+    let objToBeUpdated = [] //array
+
+    for(let unitObj of obj){
+        const chinaRegNo = unitObj.chinaRegNo
+        let objFromMongoDB = await Cifer.findOne({chinaRegNo: chinaRegNo})
     
+        if(objFromMongoDB){
+            objFromMongoDB.toObject()
+            delete objFromMongoDB._id
+            const keys = Object.keys(unitObj)
+            let toBeUpdated = false
+
+            for(let i=0; i<keys.length; i++){
+                if(unitObj[keys[i]] !== objFromMongoDB[keys[i]] ){
+                    toBeUpdated = true
+                }else{
+                    // two objects are completely the same, do nothing
+                }
+            }
+
+            if(toBeUpdated) {
+                await Cifer.deleteOne({chinaRegNo: chinaRegNo})
+                objToBeUpdated.push(unitObj)
+            }
+
+        }else{
+            objToBeAdded.push(unitObj)
+        }
+    }
+
+
+    return [objToBeAdded, objToBeUpdated]
 }
 
 
 
 module.exports = {
-    coordinateObj
+    coordinateObj,
+    validateDocument
 }
