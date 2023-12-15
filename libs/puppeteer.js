@@ -9,6 +9,7 @@ function delay(time) {
 async function extract(){
     const browser = await puppeteer.launch({
         headless: false,
+        defaultViewport: null,
         executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\Chrome.exe"
     })
     
