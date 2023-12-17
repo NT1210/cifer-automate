@@ -4,7 +4,8 @@ require("dotenv").config()
 
 
 async function connect(){
-    const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster-cifer-automate.ygz2jt2.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    const url = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.1`
+    
     mongoose
     .connect(url)
     .then((res) => {
