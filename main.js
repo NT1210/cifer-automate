@@ -41,7 +41,7 @@ async function main(){
         }
     
         // output extractedData to template excel file.
-        writeToFile(extractedData)
+        await writeToFile(extractedData, objToBeUpdated)
 
         // get disconnected from MongoDB
         await disconnect()
