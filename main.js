@@ -34,14 +34,14 @@ async function main(){
         }
 
         if(objToBeUpdated.length > 0){
-            const docToBeUpdated = await Cifer.create(objToBeUpdated)
+            // const docToBeUpdated = await Cifer.create(objToBeUpdated)
             console.log(green(`${objToBeUpdated.length} documents have been updated.`))
         }else{
             console.log(red(`No ducuments have been updated.`))
         }
     
         // output extractedData to template excel file.
-        await writeToFile(extractedData, objToBeUpdated)
+        await writeToFile(extractedData, objToBeUpdated, objToBeAdded)
 
         // get disconnected from MongoDB
         await disconnect()

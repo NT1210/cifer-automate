@@ -34,6 +34,11 @@ async function validateDocument(obj){
     let objToBeUpdated = [] //array
 
     for(let unitObj of obj){
+        // // hijack test
+        // if(unitObj.chinaRegNo === "CRUS18CS1901300007") unitObj.status = "changed!!!"
+        // if(unitObj.chinaRegNo === "CRUS18CS1901300007") unitObj.regDate = "changed!!!"
+        // if(unitObj.chinaRegNo === "CRUS18CS1901300007") unitObj.category = "changed!!!"
+
         const chinaRegNo = unitObj.chinaRegNo
         let objFromMongoDB = await Cifer.findOne({chinaRegNo: chinaRegNo})
     
@@ -41,18 +46,21 @@ async function validateDocument(obj){
             objFromMongoDB.toObject() //coverting from mongodb object to js object
             delete objFromMongoDB._id //important
             const keys = Object.keys(unitObj)
-            let toBeUpdated = false
+            let toBeUpdated = {judge: false, idxs: []}
 
             for(let i=0; i<keys.length; i++){
                 if(unitObj[keys[i]] !== objFromMongoDB[keys[i]] ){
-                    toBeUpdated = true
+                    toBeUpdated["judge"] = true
+                    toBeUpdated["idxs"].push(i)
                 }else{
                     // two objects are completely the same, do nothing
                 }
             }
 
-            if(toBeUpdated) {
-                await Cifer.deleteOne({chinaRegNo: chinaRegNo})
+            if(toBeUpdated.judge) {
+                await Cifer.findOneAndUpdate({chinaRegNo: chinaRegNo}, unitObj)
+                // await Cifer.deleteOne({chinaRegNo: chinaRegNo})
+                unitObj["changedIdxs"] = toBeUpdated.idxs
                 objToBeUpdated.push(unitObj)
             }
 
