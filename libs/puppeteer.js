@@ -48,7 +48,7 @@ async function extract(){
 
     let extractedArr = []
 
-    for(let i=0; i<5; i++){
+    for(let i=0; i<lastPageNum; i++){
         const dataPerPage = await page.evaluate(() => {
 
             let tableBody = document.querySelectorAll("tbody td")
