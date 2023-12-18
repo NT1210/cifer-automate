@@ -24,7 +24,9 @@ function coordinateObj(arr){
     }catch (err){
         console.error(err)
     }
+
     
+
     return ArrToBeReturned
 }
 
@@ -32,6 +34,7 @@ function coordinateObj(arr){
 async function validateDocument(obj){
     let objToBeAdded = [] //array
     let objToBeUpdated = [] //array
+    let objDeleted = [] //array
 
     for(let unitObj of obj){
         // // hijack test
@@ -56,7 +59,7 @@ async function validateDocument(obj){
                     // two objects are completely the same, do nothing
                 }
             }
-
+       
             if(toBeUpdated.judge) {
                 await Cifer.findOneAndUpdate({chinaRegNo: chinaRegNo}, unitObj)
                 // await Cifer.deleteOne({chinaRegNo: chinaRegNo})
@@ -69,8 +72,27 @@ async function validateDocument(obj){
         }
     }
 
+    // Detect deleted doccs
+    let MongoDBdocsArr = await Cifer.find({}, {_id:0, __v:0})
+    if(MongoDBdocsArr.length > 0){
+        for(let dbDoc of MongoDBdocsArr){
+            let notDeleted = false
+     
+            obj.forEach(ele => {
+                if(ele.chinaRegNo === dbDoc.chinaRegNo){
+                    notDeleted = true
+                }
+            })
+    
+            if(!notDeleted) {
+                objDeleted.push(dbDoc)
+                await Cifer.findOneAndDelete({chinaRegNo: dbDoc.chinaRegNo})
+            }
+        }
+    }
 
-    return [objToBeAdded, objToBeUpdated]
+    
+    return [objToBeAdded, objToBeUpdated, objDeleted]
 }
 
 

@@ -24,7 +24,8 @@ async function main(){
       
         const toBeAdded_toBeUpdatedArrs = await validateDocument(docsBefore) // returns array including objToBeAdded, objToBeUpdated
         const objToBeAdded = toBeAdded_toBeUpdatedArrs[0]
-        const objToBeUpdated = toBeAdded_toBeUpdatedArrs[1] // later youve got to create a logic in which you can detect which one is updated
+        const objToBeUpdated = toBeAdded_toBeUpdatedArrs[1]
+        const objDeleted = toBeAdded_toBeUpdatedArrs[2]
 
         if(objToBeAdded.length > 0) {
             const docToBeAdded = await Cifer.create(objToBeAdded)
@@ -34,14 +35,19 @@ async function main(){
         }
 
         if(objToBeUpdated.length > 0){
-            // const docToBeUpdated = await Cifer.create(objToBeUpdated)
             console.log(green(`${objToBeUpdated.length} documents have been updated.`))
         }else{
             console.log(red(`No ducuments have been updated.`))
         }
+
+        if(objDeleted.length > 0){
+            console.log(green(`${objDeleted.length} documents have been deleted.`))
+        }else{
+            console.log(red(`No ducuments have been deleted.`))
+        }
     
         // output extractedData to template excel file.
-        await writeToFile(extractedData, objToBeUpdated, objToBeAdded)
+        await writeToFile(extractedData, objToBeUpdated, objToBeAdded, objDeleted)
 
         // get disconnected from MongoDB
         await disconnect()
